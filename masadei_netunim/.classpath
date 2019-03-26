@@ -6,7 +6,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/shilo/Documents/GitHub/munheEx4/Ex4_OOP/mysql-connector-java-5.1.47.jar">
+	<classpathentry kind="lib" path="mysql-connector-java-5.1.47.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-10">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
