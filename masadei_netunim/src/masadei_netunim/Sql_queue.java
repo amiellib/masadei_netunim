@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -80,9 +81,12 @@ public class Sql_queue {
 		}	
 	}
 
-	public void insert_queue(int appointment_id , Date actual_time)
+	public void insert_queue(int appointment_id) throws ParseException
 	{
-		String queue = "insert into Queue values("+appointment_id +" , " + actual_time + ")";
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String actual_time = dateFormat.format(get_now());
+		String queue = "insert into Queue values("+appointment_id +" , \"" + actual_time + "\")";
+		System.out.println(queue);
 		try {
 			run_queue_update(queue);
 		} catch (Exception e) {
@@ -126,5 +130,43 @@ public class Sql_queue {
 		}	
 	    Date now=result.parse(rs);  
 		return now;
+	}
+	
+	public String q1(String doctor_id)
+	{
+		String rs = null;
+		String queue = "select Patients.patient_id , Patients.patient_name , appointment_time " + 
+				"from Appointment join Patients on " + 
+				"Appointment.patient_id = Patients.patient_id " + 
+				"where doctor_id = "+ doctor_id + " " + 
+				"ORDER BY appointment_time ASC";
+		try {
+			rs = run_queue(queue);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return rs;
+	}
+	
+	public void q2_create_precedure()
+	{
+		String queue = "CREATE PROCEDURE `M_N.spqueue_patient_in` (in patient_id varchar(9)) BEGIN insert into Queue values((select appointment_id from Appointment where patient_id=@patient_id), CURRENT_TIMESTAMP);END";
+		try {
+			run_queue_update(queue);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+	public void q2(String patient_id)
+	{
+		String queue = "exec M_N.spqueue_patient_in";
+		try {
+			run_queue_update(queue);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 }
