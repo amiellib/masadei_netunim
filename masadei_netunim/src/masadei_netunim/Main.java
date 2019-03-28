@@ -10,7 +10,12 @@ public class Main {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date rs = null;
 		Sql_queue sql = new Sql_queue();
-		rs = sql.get_now();
+		String temp = sql.q1("302537394");
+		System.out.println(temp);
+//		rs = sql.get_now();
+	//	sql.insert_queue(5);
+//		sql.insert_queue_summary(date, doctor_id, num_of_patients);
+		
 //		String temp = sql.select_all("Appointment");
 //		System.out.println(temp);
 //		sql.insert_appointment("543256754", "302537394", rs);
